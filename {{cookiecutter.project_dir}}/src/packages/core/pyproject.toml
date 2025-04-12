@@ -1,0 +1,35 @@
+[project]
+name = "core"
+version = "0.1.0"
+description = "Core functionality for {{ cookiecutter.project_dir }}"
+authors = [
+    { name = "{{ cookiecutter.author_name }}", email = "{{ cookiecutter.author_email }}" }
+]
+requires-python = ">={{ cookiecutter.python_version }}"
+dependencies = [
+  "common",
+  "pandas>=2.2.3",
+{% if cookiecutter.include_bronze_silver_gold == "yes" %}
+  "polars>=1.27.1",
+  "pyarrow>=19.0.1",
+{% endif %}
+{% if cookiecutter.include_visualization == "yes" %}
+  "matplotlib>=3.10.1",
+  "seaborn>=0.13.2",
+  "plotly>=6.0.1",
+{% endif %}
+{% if cookiecutter.include_ml == "yes" %}
+  "scikit-learn>=1.6.1",
+  "xgboost>=3.0.0",
+{% endif %}
+{% if cookiecutter.include_neural_networks == "yes" %}
+  "torch>=2.6.0",
+{% endif %}
+{% if cookiecutter.include_mlops == "yes" %}
+  "mlflow>=2.21.3",
+{% endif %}
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

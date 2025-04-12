@@ -1,0 +1,26 @@
+{
+    "project_name": "My new project",
+    "project_dir": "{{ cookiecutter.project_name.lower().replace(' ', '-').replace('_', '-') }}",
+    "project_description": "Short description of the project",
+    "python_version": ["3.10", "3.11", "3.12", "3.13"],
+    "include_bronze_silver_gold": ["yes", "no"],
+    "include_visualization": ["yes", "no"],
+    "include_ml": ["yes", "no"],
+    "include_neural_networks": ["yes", "no"],
+    "include_mlops": ["yes", "no"],
+    "include_documentation": ["yes", "no"],
+    "include_ci": ["yes", "no"],
+    "open_source_license": ["MIT", "BSD-3-Clause", "GNU GPL v3.0", "Apache Software License 2.0", "Not open source"],
+    "__prompts__": {
+        "project_name": "Select your project name",
+        "project_dir": "Select your project directory name",
+        "project_desc": "A short project description",
+        "include_bronze_silver_gold": "Medallion data structure?",
+        "include_visualization": "Install data visualization libraries?",
+        "include_ml": "Install machine learning libraries?",
+        "include_neural_networks": "Install neural network libraries?",
+        "include_mlops": "Using MLFlow?",
+        "open_source_license": "Which license?"
+    },
+    "_extensions": ["local_extensions.AdditionalPrompts"] 
+}
