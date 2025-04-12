@@ -1,0 +1,17 @@
+[project]
+name = "common"
+version = "0.1.0"
+description = "Common libraries for {{ cookiecutter.project_dir }}"
+authors = [
+    { name = "{{ cookiecutter.author_name }}", email = "{{ cookiecutter.author_email }}" }
+]
+requires-python = ">={{ cookiecutter.python_version }}"
+dependencies = [
+  "pydantic>=2.11.3",
+  "pydantic-settings>=2.8.1",
+  "loguru>=0.7.3",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

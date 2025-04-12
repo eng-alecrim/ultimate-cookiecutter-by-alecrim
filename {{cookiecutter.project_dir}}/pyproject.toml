@@ -1,0 +1,86 @@
+[project]
+name = "{{ cookiecutter.project_dir }}"
+version = "0.1.0"
+description = "{{ cookiecutter.project_description }}"
+readme = "README.md"
+authors = [
+  { name = "{{ cookiecutter.author_name }}", email = "{{ cookiecutter.author_email }}" }
+]
+requires-python = ">={{ cookiecutter.python_version }}"
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python :: {{ cookiecutter.python_version }}",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Intended Audience :: Science/Research",
+]
+dependencies = [
+  "common",
+  "core",
+  "pip>=25.0.1",
+]
+
+[dependency-groups]
+dev = [
+  "black[jupyter]>=25.1.0",
+  "pytest>=8.3.5",
+  "pytest-cov>=6.1.1",
+  "ipykernel>=6.29.5",
+  "ipywidgets>=8.1.6",
+  "taskipy>=1.14.1",
+  "ruff>=0.11.5",
+  "ignr>=2.2",
+{% if cookiecutter.include_documentation == "yes" %}
+  "mkdocs>=1.6.1",
+  "mkdocs-material>=9.6.11",
+  "mkdocstrings[python]>=0.29.1",
+{% endif %}
+]
+
+[tool.uv.sources]
+core = { workspace = true }
+common = { workspace = true }
+
+[tool.uv.workspace]
+members = ["src/packages/*"]
+
+[tool.ruff]
+line-length = 88
+extend-exclude = ["migrations", "data"]
+
+[tool.ruff.lint]
+preview = true
+select = ["I", "F", "E", "W", "PL", "PT"]
+ignore = ["PLR1711", "E731"]
+
+[tool.ruff.format]
+preview = true
+quote-style = "double"
+
+[tool.pytest.ini_options]
+pythonpath = "."
+addopts = "-p no:warnings --cov=packages --cov-report=html:coverage_report -vv"
+testpaths = ["tests"]
+
+[tool.taskipy.tasks]
+# Development workflow tasks
+lint = "ruff check ."
+format = "ruff format ."
+test = "pytest"
+cov = "pytest --cov=src/packages --cov-report=term-missing"
+precommit = "task format && task lint && task test"
+
+{% if cookiecutter.include_documentation == "yes" %}
+# Documentation tasks
+docs-build = "mkdocs build"
+docs-serve = "mkdocs serve"
+{% endif %}
+
+{% if cookiecutter.include_bronze_silver_gold == "yes" %}
+# Data processing tasks
+process-bronze = "python -m core.data.bronze"
+process-silver = "python -m core.data.silver"
+process-gold = "python -m core.data.gold"
+{% endif %}
+
+# Notebook conversion
+nb-to-script = "jupyter nbconvert --to python src/notebooks/*.ipynb --output-dir=src/packages/core/scripts/"
